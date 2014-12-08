@@ -1,0 +1,31 @@
+def amazingMenu():
+    """ Display an amazing Banner and the Menu for the tool to instantly impress the users."""
+    print (30 * '-')
+    print ("   M A I N - M E N U")
+    print (30 * '-')
+    print ("1. scanport")
+    print ("2. crackHouse")
+    print ("3. listRestricted")
+    print ("4. identifyOUI")
+    print ("5. generateReport")
+    print (30 * '-')
+
+    choice = input('Enter your choice [1-5] : ')
+
+    choice = int(choice)
+    if choice == 1:
+        print ("Starting scanport...")
+    elif choice == 2:
+        print ("Starting crackHouse...")
+    elif choice == 3:
+        print ("Starting listRestricted...")
+    elif choice == 4:
+        print ("Starting indentifyOUI...")
+    elif choice == 5:
+        print ("Starting generateReport...")
+    else:
+        print ("Invalid number. Try again...")
+    print ('YAPTF: by DiamondHouse inc.')
+
+
+amazingMenu()
