@@ -7,5 +7,6 @@ def identifyOUI():
     for line in database:
         if macaddress in line: print line
     database.close()
+    identifyOUI()
 
 identifyOUI()
