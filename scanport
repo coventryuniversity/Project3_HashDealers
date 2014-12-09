@@ -19,5 +19,5 @@ def scanport(host, port):
     s.close()
     return "Port "+str(port)+" is open!"
 
-blah = scanport(host, port)
-print(blah)
+printer = scanport(host, port)
+print(printer)
