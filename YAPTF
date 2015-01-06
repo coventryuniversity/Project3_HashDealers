@@ -6,6 +6,19 @@ import robotparser
 host = " "
 port = " "
 
+def returnMenu():
+    reply = raw_input("Do you want to go back to the Menu? [y/n]: ")
+
+    if reply == "N":
+        raise SystemExit
+    elif reply == "Y":
+        amazingMenu()
+    elif reply == "n":
+        raise SystemExit
+    elif reply == "y":
+        amazingMenu()
+    return
+    
 def scanport(host, port):
     """Attempt to connect to a port on a host to see if it is open
     :param host: Host IP to scan
@@ -38,7 +51,7 @@ def crackHouse():
             print "Passcode is {0}".format(passw)
             break
     return passw
-
+    
 
 #This needs a bit more tweaking to get it working:
 
@@ -68,7 +81,7 @@ def listRestricted():
     for site in  sites:
         print "Denies for " +site
         print "\t" + "\n\t".join(getDenies(site))
-
+        
 def identifyOUI():
     macaddress = raw_input("Search MAC address: ")
     #"""This function should identify the manufacturer of a given device based on its MAC adress"""
@@ -79,9 +92,8 @@ def identifyOUI():
         if macaddress in line: print line
     database.close()
     identifyOUI()
-
-
-def generateReport():
+    
+    
     """This function should take all the output from the selected tunctionality and save it to a file of some sort."""
     
     #listRestricted()
@@ -89,9 +101,7 @@ def generateReport():
     #print crackhouse()
     #print listrestricted
     print("Documentation generated and saved to file.")
-
     
-
 # Below I can test all the custom functionality that I am writing, just by calling the function
 
 #if __name__ == "__main__":
@@ -112,28 +122,37 @@ def amazingMenu():
     print ("3. listRestricted")
     print ("4. identifyOUI")
     print ("5. generateReport")
+    print ("6. Exit program")
     print (30 * '-')
 
-    choice = input('Enter your choice [1-5] : ')
+    choice = input('Enter your choice [1-6] : ')
 
     choice = int(choice)
     if choice == 1:
         print ("Starting scanport...")
         print scanport(host, port)
+        returnMenu()
     elif choice == 2:
         print ("Starting crackHouse...")
         crackHouse()
+        returnMenu()
     elif choice == 3:
         print ("Starting listRestricted...")
         listRestricted()
+        returnMenu()
     elif choice == 4:
         print ("Starting indentifyOUI...")
         identifyOUI()
+        returnMenu()
     elif choice == 5:
         print ("Starting generateReport...")
         generateReport()
+        returnMenu()
+    elif choice == 6:
+        raise SystemExit
     else:
         print ("Invalid number. Try again...")
-    print ('YAPTF: by DiamondHouse inc.')
 
 amazingMenu()
+
+
