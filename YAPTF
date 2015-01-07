@@ -2,6 +2,7 @@ import socket
 import urllib2
 import subprocess
 import robotparser
+import os
 
 host = " "
 port = " "
@@ -36,6 +37,14 @@ def scanport(host, port):
         return "Port "+str(port)+" is closed."
     s.close()
     return "Port "+str(port)+" is open!"
+
+def arp(host)
+    """use arp-scan to attempt to get the mac address from an IP address"""
+    """will only work on linux with arp-scan installed, to intall please use "sudo apt-get install arp-scan" thanks!"""
+    
+    host = raw_input("Enter the IP you would like to scan: ")
+    arpScan = os.system("sudo arp-scan "+str(host))
+    print arpScan
     
 
 def crackHouse():
@@ -122,7 +131,8 @@ def amazingMenu():
     print ("3. listRestricted")
     print ("4. identifyOUI")
     print ("5. generateReport")
-    print ("6. Exit program")
+    print ("6. arpScan")
+    print ("7. Exit program")
     print (30 * '-')
 
     choice = input('Enter your choice [1-6] : ')
@@ -149,6 +159,10 @@ def amazingMenu():
         generateReport()
         returnMenu()
     elif choice == 6:
+        print ("Starting arpScan")
+        arp(host)
+        returnMenu()
+    elif choice == 7:
         raise SystemExit
     else:
         print ("Invalid number. Try again...")
