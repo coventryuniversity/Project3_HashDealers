@@ -135,7 +135,7 @@ def amazingMenu():
     print ("7. Exit program")
     print (30 * '-')
 
-    choice = input('Enter your choice [1-6] : ')
+    choice = input('Enter your choice [1-7] : ')
 
     choice = int(choice)
     if choice == 1:
@@ -159,7 +159,7 @@ def amazingMenu():
         generateReport()
         returnMenu()
     elif choice == 6:
-        print ("Starting arpScan")
+        print ("Starting arpScan...")
         arp(host)
         returnMenu()
     elif choice == 7:
