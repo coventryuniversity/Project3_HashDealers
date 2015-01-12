@@ -76,20 +76,22 @@ def listRestricted():
         robot.read()
         #robot.parse()
 
-        print robot.default_entry
-
-
-       #For each entry, look at the rule lines and add the path to paths if disallowed.
-        for entry in robot.entries:
-            for line in robot.default_entry.rulelines:
-                not line.allowance and paths.append(line.path)
-
+        robotic = robot.default_entry
+        f = open("robots.txt", "w")
+        f.write(str(robotic))
+        f.close()
+        #For each entry, look at the rule lines and add the path to paths if disallowed.
+        
+        fx = open("robots.txt", "r")
+        for line in fx:
+            if deny in line: print line
+        fx.close()
 
         return set(paths)
 
     for site in  sites:
         print "Denies for " +site
-        print "\t" + "\n\t".join(getDenies(site))
+        getDenies(site)
         
 def identifyOUI():
     macaddress = raw_input("Search MAC address: ")
