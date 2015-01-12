@@ -26,7 +26,7 @@ def scanport(host, port):
     :param port: Port to scan
     """
     host = raw_input("Enter the IP you would like to scan: ")
-    port = input("and which port would you like to scan? ")
+    port = input("and which port would you like to scan [0 to scan all ports]: ")
     if port == 0: scan = multiPort(host, port)
     else:
         s = socket.socket()
@@ -47,9 +47,9 @@ def multiPort(host, port):
     :param host: Host IP to scan
     :param port: Port to scan
     """
-    for port in range(1, 65536)
+    for port in range(1, 65536):
         s = socket.socket()
-        s.settimeout(5)
+        s.settimeout(2)
         try:
             s.connect((host, port))
             s.getsockname()
@@ -88,7 +88,7 @@ def crackHouse():
 
 def listRestricted():
     """ Return the restricted folders from a webpage based on the robots.txt file. """
-    sites = ['www.google.com','www.coventry.ac.uk', 'www.yahoo.com']
+    site = raw_input("Enter the site: ")
 
     def getDenies(site):
         """ Create a new robotparser instance and read the site's robots file"""
@@ -105,15 +105,16 @@ def listRestricted():
         #For each entry, look at the rule lines and add the path to paths if disallowed.
         deny = "Disallow: "
         fx = open("robots.txt", "r")
+
         for line in fx:
             if deny in line: print line
         fx.close()
 
         return set(paths)
 
-    for site in  sites:
-        print "Denies for " +site
-        getDenies(site)
+    #for site in  sites:
+    print "Denies for " +site
+    getDenies(site)
         
 def identifyOUI():
     macaddress = raw_input("Search MAC address: ")
@@ -192,6 +193,4 @@ def amazingMenu():
         print ("Invalid number. Try again...")
 
 amazingMenu()
-
-
 
