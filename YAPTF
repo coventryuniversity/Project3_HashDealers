@@ -132,8 +132,8 @@ def amazingMenu():
     print ("2. crackHouse")
     print ("3. listRestricted")
     print ("4. identifyOUI")
-    print ("5. generateReport")
-    print ("6. arpScan")
+    print ("5. arpScan")
+    print ("6. generateReport")
     print ("7. Exit program")
     print (30 * '-')
 
@@ -157,12 +157,12 @@ def amazingMenu():
         identifyOUI()
         returnMenu()
     elif choice == 5:
-        print ("Starting generateReport...")
-        generateReport()
-        returnMenu()
-    elif choice == 6:
         print ("Starting arpScan...")
         arp(host)
+        returnMenu()
+    elif choice == 6:
+        print ("Starting generateReport...")
+        generateReport()
         returnMenu()
     elif choice == 7:
         raise SystemExit
@@ -170,5 +170,6 @@ def amazingMenu():
         print ("Invalid number. Try again...")
 
 amazingMenu()
+
 
 
