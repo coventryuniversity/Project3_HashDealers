@@ -27,17 +27,39 @@ def scanport(host, port):
     """
     host = raw_input("Enter the IP you would like to scan: ")
     port = input("and which port would you like to scan? ")
-    s = socket.socket()
-    s.settimeout(5)
-    try:
-        s.connect((host, port))
-        print s.getsockname()
-    except socket.error:
+    if port == 0: scan = multiPort(host, port)
+    else:
+        s = socket.socket()
+        s.settimeout(5)
+        try:
+            s.connect((host, port))
+            s.getsockname()
+        except socket.error:
+            s.close()
+            scan = "Port:  "+str(port)+"\t\t"+" Closed"
+            return scan
         s.close()
-        return "Port "+str(port)+" is closed."
-    s.close()
-    return "Port "+str(port)+" is open!"
+        scan = "Port:  "+str(port)+"\t\t"+" Open"
+    return scan
     
+def multiPort(host, port):
+    """Attempt to connect to a port on a host to see if it is open
+    :param host: Host IP to scan
+    :param port: Port to scan
+    """
+    for port in range(1, 65536)
+        s = socket.socket()
+        s.settimeout(5)
+        try:
+            s.connect((host, port))
+            s.getsockname()
+        except socket.error:
+            s.close()
+            continue
+        print "Port:   "+str(port)+"\t\t"+" Open"
+        s.close()
+    return "Finished."
+
 def arp(host):
     """use arp-scan to attempt to get the mac address from an IP address"""
     """will only work on linux with arp-scan installed, to intall please use "sudo apt-get install arp-scan" thanks!"""
