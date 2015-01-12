@@ -81,7 +81,7 @@ def listRestricted():
         f.write(str(robotic))
         f.close()
         #For each entry, look at the rule lines and add the path to paths if disallowed.
-        
+        deny = "Disallow: "
         fx = open("robots.txt", "r")
         for line in fx:
             if deny in line: print line
