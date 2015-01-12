@@ -38,7 +38,7 @@ def scanport(host, port):
     s.close()
     return "Port "+str(port)+" is open!"
 
-def arp(host)
+def arp(host):
     """use arp-scan to attempt to get the mac address from an IP address"""
     """will only work on linux with arp-scan installed, to intall please use "sudo apt-get install arp-scan" thanks!"""
     
