@@ -156,11 +156,10 @@ def amazingMenu():
     print ("3. listRestricted")
     print ("4. identifyOUI")
     print ("5. arpScan")
-    print ("6. generateReport")
-    print ("7. Exit program")
+    print ("6. Exit program")
     print (30 * '-')
 
-    choice = input('Enter your choice [1-7] : ')
+    choice = input('Enter your choice [1-6] : ')
 
     choice = int(choice)
     if choice == 1:
@@ -184,10 +183,6 @@ def amazingMenu():
         arp(host)
         returnMenu()
     elif choice == 6:
-        print ("Starting generateReport...")
-        generateReport()
-        returnMenu()
-    elif choice == 7:
         raise SystemExit
     else:
         print ("Invalid number. Try again...")
