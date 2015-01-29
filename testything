@@ -4,12 +4,11 @@ import subprocess
 import robotparser
 import os
 import multiprocessing
-import Queue
+
 
 host = " "
 port = " "
-openPorts3 = []
- 
+
 peep = open("report.out", "w")
 
 
@@ -33,19 +32,40 @@ def scanport(host, port):
     """
     host = raw_input("Enter the IP you would like to scan: ")
     port = input("and which port would you like to scan [0 to scan all ports]: ")
-    scan = " "
+    
+    def multiPort(host, port, a, b, scan):
+    #Attempt to connect to a port on a host to see if it is open
+    #:param host: Host IP to scan
+    #:param port: Port to scan
+        openPort = []
+        for port in range(a, b):     
+            s = socket.socket()
+            s.settimeout(0.05)
+            try:
+                s.connect((host, port))
+            except socket.error:
+                s.close()
+                continue
+            print "Port:   "+str(port)+"\t\t"+" Open"
+            openPort.append("Port: "+str(port)+" Open")
+            s.close()
+        qu.put(openPort)
+        return 0
+
     if port == 0:
-        jobs = []
-        a = 1
-        b = 400
+        jobs = []; scan = []
+        a = 1; b = 400
+        qu = multiprocessing.Queue()
         for i in range(1, 4):
-            p = multiprocessing.Process(target=multiPort, args=(host, port, a, b,))
+            p = multiprocessing.Process(target=multiPort, args=(host, port, a, b,scan,))
             jobs.append(p)
             p.start()
             a = a + 400
             b = b + 400
         p.join()
-        #scan = multiPort(host, port)
+        while not qu.empty():
+            scan.append(qu.get())
+    #scan = multiPort(host, port)
     else:
         s = socket.socket()
         s.settimeout(5)
@@ -81,21 +101,6 @@ def scanport(host, port):
         s.close()
     return host+"\n"+str(openPorts)"""
 
-def multiPort(host, port, a, b):
-    #Attempt to connect to a port on a host to see if it is open
-    #:param host: Host IP to scan
-    #:param port: Port to scan
-    
-    for port in range(a, b):     
-       s = socket.socket()
-       s.settimeout(0.05)
-       try:
-         s.connect((host, port))
-       except socket.error:
-           s.close()
-           continue
-       print "Port:   "+str(port)+"\t\t"+" Open"
-       s.close()
 
 
 def arp(host):
